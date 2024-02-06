@@ -1,8 +1,34 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
+import React, { useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
 
 export default function StartGameScreen() {
+  const [enteredNumber, setEnteredNumber] = useState("");
+
+  const numberInputHandler = (enteredText) => {
+    setEnteredNumber(enteredText);
+  };
+
+  const resetInputHandler = () => {
+    setEnteredNumber('')
+  }
+
+  const confirmInput = () => {
+    const chosenNumber = parseInt(enteredNumber)
+
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99){
+        Alert.alert("Invalid Number!", "Number has to be between 1 and 99.", [
+            {
+                text:"Okay", style: 'destructive', onPress: resetInputHandler
+            }
+        ])
+        return;
+    }
+
+
+
+  };
+
   return (
     <View style={styles.inputContainer}>
       <TextInput
@@ -11,10 +37,12 @@ export default function StartGameScreen() {
         keyboardType="number-pad"
         autoCapitalize="none"
         autoCorrect={false}
+        onChangeText={numberInputHandler}
+        value={enteredNumber}
       />
       <View style={styles.buttonContainer}>
-        <PrimaryButton>Reset</PrimaryButton>
-        <PrimaryButton>Confirm</PrimaryButton>
+        <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+        <PrimaryButton onPress={confirmInput}>Confirm</PrimaryButton>
       </View>
     </View>
   );
@@ -22,8 +50,8 @@ export default function StartGameScreen() {
 
 const styles = StyleSheet.create({
   inputContainer: {
-    justifyContent:'center',
-    alignItems:'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginHorizontal: 24,
     padding: 16,
     marginTop: 100,
@@ -50,8 +78,8 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontWeight: "bold",
   },
-  buttonContainer:{
-    flexDirection: 'row',
-    marginTop: 6
-  }
+  buttonContainer: {
+    flexDirection: "row",
+    marginTop: 6,
+  },
 });
