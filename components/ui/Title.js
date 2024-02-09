@@ -9,11 +9,12 @@ export default function Title({children}) {
 
 const styles = StyleSheet.create({
     title: {
+      fontFamily: "Shabnam-bold",
       fontSize: 24,
-      color: "#ddb52f",
-      fontWeight: "bold",
+      color: 'white',
+      // fontWeight: "bold",
       textAlign: "center",
-      borderColor: "#ddb52f",
+      borderColor: 'white',
       borderWidth: 2,
       padding: 12,
     },
